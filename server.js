@@ -11,6 +11,7 @@ server.use(staticHandler);
 const bodyParser = express.urlencoded({ extended: false });
 
 server.get('/', logIn.get);
+server.post('/log-in', logIn.post);
 
 
 

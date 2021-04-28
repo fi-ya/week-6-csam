@@ -14,7 +14,8 @@ function get(request, response) {
 }
 
 function post(request, response) {
-
+const {email, password} =request.body;
+console.log({email, password})
     
 }
 
