@@ -2,12 +2,15 @@ const express = require("express");
 
 const server = express();
 const staticHandler = express.static("public");
-const posts = require("./routes/posts.js");
-const home = require("./routes/home.js");
-const model = require("./database/model.js");
+const signUp = require("./routes/signUp.js");
 
 server.use(staticHandler);
 const bodyParser = express.urlencoded({ extended: false });
+
+
+server.get('/sign-up', signUp.get);
+server.post('/sign-up', bodyParser, signUp.post);
+
 
 
 const PORT = process.env.PORT || 3000;
