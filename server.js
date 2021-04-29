@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 const homepage = require("./routes/home.js");
 const logIn = require("./routes/logIn.js");
 const signUp = require("./routes/signUp.js");
+const posts = require("./routes/posts")
 const bodyParser = express.urlencoded({ extended: false });
 
 
@@ -22,6 +23,9 @@ server.post('/log-in', bodyParser, logIn.post);
 
 server.get("/sign-up", signUp.get);
 server.post("/sign-up", bodyParser, signUp.post);
+
+server.get("/posts", posts.get);
+server.post("/posts", bodyParser, posts.post);
 
 
 const PORT = process.env.PORT || 3000;

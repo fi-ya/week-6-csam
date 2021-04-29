@@ -26,7 +26,7 @@ function post(request, response) {
     .then((sid) => {
       console.log(sid);
       response.cookie("sid", sid, auth.COOKIE_OPTIONS);
-      response.redirect("/");
+      response.redirect("/posts");
     })
     .catch((error) => {
       console.error(error);
