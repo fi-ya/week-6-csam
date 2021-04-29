@@ -3,6 +3,11 @@ const express = require("express");
 const server = express();
 const staticHandler = express.static("public");
 
+// middleware - gets cookie header, parses into obj + attaches to request
+const cookieParser = require('cookie-parser');
+server.use(cookieParser());
+
+
 //const posts = require("./routes/posts.js");
 const logIn = require("./routes/logIn.js");
 
@@ -12,7 +17,7 @@ server.use(staticHandler);
 const bodyParser = express.urlencoded({ extended: false });
 
 server.get("/", logIn.get);
-server.post("/log-in", logIn.post);
+server.post('/log-in', bodyParser, logIn.post);
 
 server.get("/sign-up", signUp.get);
 server.post("/sign-up", bodyParser, signUp.post);
