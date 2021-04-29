@@ -10,7 +10,7 @@ function get(request, response) {
       <label for="password">Password</label>
       <input type="password" id="password" name="password" required>
       <button>Log in</button>
-    </form>
+    </form><br><br>
     <a href="/">Back to Homepage</a>
   `;
   response.send(layout('Log in', html))
