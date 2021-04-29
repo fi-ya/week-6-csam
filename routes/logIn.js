@@ -11,7 +11,8 @@ function get(request, response) {
       <input type="password" id="password" name="password">
       <button>Log in</button>
     </form>
-  `
+    <a href="/">Back to Homepage</a>
+  `;
   response.send(layout('Log in', html))
 
 }
@@ -23,10 +24,18 @@ function post(request, response) {
     .verifyUser(email, password)
     .then(auth.saveUserSession)
     .then((sid) => {
+      console.log(sid);
       response.cookie("sid", sid, auth.COOKIE_OPTIONS);
       response.redirect("/");
-    });
-  // ...
-}
+    })
+    .catch((error) => {
+      console.error(error);
+      const html =
+        `<h1>User not found</h1>
+        <a href="/">Back to Homepage</a>
+        `;
+      response.send(layout('User not found', html));
 
+    });
+}
 module.exports = { get, post };
