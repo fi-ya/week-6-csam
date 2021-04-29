@@ -1,6 +1,6 @@
-const layout = require('../layout');
-const model = require('../database/model.js');
-const db = require('../database/connection');
+const layout = require("../layout");
+const model = require("../database/model.js");
+const db = require("../database/connection");
 
 function htmlPostForm() {
   return `
@@ -16,65 +16,13 @@ function htmlPostForm() {
     <a href="/">Back to Homepage</a>
     `;
 }
-/*
-server.get('/', (request, response) => {
-  db.query("SELECT firstname FROM fac_members")
-  .then((result) => {
-    const members = result.rows;
-    const membersList = members.map((x) => `
-      <li>${x.firstname}</li>
-      <form action="/delete-user" method="POST" style="display: inline;">
-        <button name="name" value="${x.firstname}" aria-label="Delete ${x.firstname}">
-          Delete
-        </button>
-      </form>`).join("");
-
-    response.send(`
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Document</title>
-      <link rel="stylesheet" href="styles.css">
-    </head>
-    <body>
-      <h1>My Database</h1>
-      <ul>
-        ${membersList}
-      </ul>
-      <a href='/add-person'>Add yourself to the list!</a><br>
-      <a href='/comments'>Add a comment!</a>
-    </body>
-    </html>
-    `);
-  })
-})
-*/
-
-
-/*
-const db = require("../database/connection.js");
-
-function post(request, response) {
-  const idToDelete = request.body.id;
-  // Note: this also deletes all the user's blog_posts
-  // see "ON DELETE CASCADE" in init.sql
-  db.query("DELETE FROM users WHERE id = $1", [idToDelete]).then(() => {
-    response.redirect("/");
-  });
-}
-
-module.exports = { post };
-*/
-
 
 function displayPosts() {
   return db.query("SELECT * FROM posts").then((result) => {
     const posts = result.rows;
-     console.log(posts)
-    const postContent = posts.map((question) => `
+    const postContent = posts
+      .map(
+        (question) => `
     <div>
     <span>${question.user_id}</span>
     <p>${question.text_content}</p>
@@ -83,35 +31,29 @@ function displayPosts() {
           Delete
         </button>
       </form>
-      </div>`).join(""); 
-    // console.log(textContent)
-//then scope: returns if promise is fulfilled
+      </div>`
+      )
+      .join("");
+
     return `
     <section>
     ${postContent}
     <section>
-    ` 
-
-  })
-
+    `;
+  });
 }
 
-
 function get(request, response) {
-    displayPosts().then((post) => {
-      const html = layout(
-        `Checkin'?`,
-          htmlPostForm() + post
-      );
-      response.send(html);
-    })
-   
-
+  displayPosts().then((post) => {
+    const html = layout(`Checkin'?`, htmlPostForm() + post);
+    response.send(html);
+  });
 }
 
 function post(request, response) {
   const { text_content } = request.body;
   const sid = request.signedCookies.sid;
+
   if (sid) {
     model
       .getUserSessionData(sid)
@@ -121,17 +63,33 @@ function post(request, response) {
       })
       .then(response.redirect("/posts"));
   }
-  response.redirect("/log-in")
+  response.redirect("/log-in");
 }
 
-function deletePost  (request, response) {
-        const postId = request.body.id;
-        console.log(postId)
+function deletePost(request, response) {
+  const postId = request.body.id;
+  const sid = request.signedCookies.sid;
+
+  if (sid) {
+    const userData = model.getUserSessionData(sid);
+    const postData = db.query("SELECT * FROM posts WHERE id = $1 ", [postId]);
+
+    Promise.all([userData, postData]).then((values) => {
+      const userId = values[0].data.user.id;
+      const postUserId = values[1].rows[0].user_id;
+
+      if (userId === postUserId) {
         return db
-          .query("DELETE FROM posts WHERE id = $1", [postId])
+          .query("DELETE FROM posts WHERE id = $1 ", [postId])
           .then(() => {
             response.redirect("/posts");
-          })
-      
+          });
+      }
+    });
+
+
+  }
+
 }
+
 module.exports = { get, post, deletePost };
