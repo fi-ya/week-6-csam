@@ -29,15 +29,32 @@ function createSession(sid, data) {
     .then((result) => result.rows[0].sid);
 }
 
-// function createSession(sid, data){
-//   const INSERT_SESSION = `INSERT INTO sessions (sid, data) VALUES ($1, $2)
-//   RETURNING sid`;
-//   return db.query(INSERT_SESSION, [sid, data])
-//   .then((result) => result.rows[0].sid)
-//   }
+// save post in db
+function createPost(user_id, text_content) {
+  const INSERT_POST = `
+    INSERT INTO posts ( user_id, text_content, created_at) VALUES
+  ($1,  $2, (SELECT CURRENT_TIMESTAMP))
+    `;
+  return db
+    .query(INSERT_POST, [user_id, text_content])
+}
+
+function getUserSessionData(sid) {
+
+    const SELECT_SESSION_DATA = `
+        SELECT data FROM sessions WHERE sid = $1
+    `;
+    return db
+      .query(SELECT_SESSION_DATA, [sid])
+      .then((result) => result.rows[0]);
+}
+
+
 
 module.exports = {
   createUser,
   getUser,
   createSession,
+  createPost,
+  getUserSessionData,
 };

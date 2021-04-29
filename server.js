@@ -27,6 +27,19 @@ server.post("/sign-up", bodyParser, signUp.post);
 server.get("/posts", posts.get);
 server.post("/posts", bodyParser, posts.post);
 
+/*
+server.post('/delete-user', (request, response) => {
+  const userToDelete = [request.body.name];
+  return db
+    .query(DELETE FROM fac_members WHERE firstname = $1;, userToDelete)
+    .then(() => {
+      response.redirect("/");
+    })
+})
+*/
+
+server.post("/delete-post", bodyParser, posts.deletePost);
+
 
 const PORT = process.env.PORT || 3000;
 

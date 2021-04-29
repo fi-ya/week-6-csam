@@ -13,6 +13,7 @@ function get(request, response) {
     <input type="password" id='password' name='password' required />
     <button>Submit</button>
   </form>
+  <a href="/">Back to Homepage</a>
   `;
   response.send(layout("Sign up", html));
 }
