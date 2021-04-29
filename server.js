@@ -7,16 +7,16 @@ const staticHandler = express.static("public");
 const cookieParser = require('cookie-parser');
 server.use(cookieParser());
 
-
-//const posts = require("./routes/posts.js");
+const homepage = require("./routes/home.js");
 const logIn = require("./routes/logIn.js");
-
 const signUp = require("./routes/signUp.js");
+//const posts = require("./routes/posts.js");
 
 server.use(staticHandler);
 const bodyParser = express.urlencoded({ extended: false });
 
-server.get("/", logIn.get);
+server.get("/", homepage.get);
+server.get("/log-in", logIn.get);
 server.post('/log-in', bodyParser, logIn.post);
 
 server.get("/sign-up", signUp.get);
