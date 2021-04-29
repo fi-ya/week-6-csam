@@ -1,5 +1,6 @@
 const layout = require('../layout');
 const model = require('../database/model.js');
+const db = require('../database/connection');
 
 function htmlPostForm() {
     return `
@@ -10,21 +11,26 @@ function htmlPostForm() {
 }
 
 function displayPosts() {
-    return `
+  return db.query("SELECT * FROM posts").then((result) => {
+    const posts = result.rows;
+    // console.log(posts)
+    const textContent = posts.map((question) => `<p>${question.text_content}</p>`).join(""); 
+    // console.log(textContent)
 
-    // insert html here for posts layout ect divs with posts and delete button 
-
-    `;
+    return textContent //then scope: returns if promise is fulfilled
+  })
 }
 
 
 function get(request, response) {
-
-    const html = layout(
-      `Checkin'?`,
-        htmlPostForm() + displayPosts()
-    );
-    response.send(html);
+    displayPosts().then((post) => {
+      const html = layout(
+        `Checkin'?`,
+          htmlPostForm() + post
+      );
+      response.send(html);
+    })
+   
 
 }
 
@@ -33,4 +39,4 @@ function post(request, response) {
 
 }
 
-module.exports = { get, post };
+module.exports = { get, post, displayPosts };

@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser');
 const homepage = require("./routes/home.js");
 const logIn = require("./routes/logIn.js");
 const signUp = require("./routes/signUp.js");
-const posts = require("./routes/posts")
+const posts = require("./routes/posts.js")
 const bodyParser = express.urlencoded({ extended: false });
 
 
