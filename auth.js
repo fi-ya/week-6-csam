@@ -1,6 +1,6 @@
+const model = require("./database/model")
 const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
-const model = require("./database/model");
 
 const COOKIE_OPTIONS = {
   httpOnly: true,
@@ -17,9 +17,23 @@ function createUser(email, password, name) {
 
 function saveUserSession(user) {
     const sid = crypto.randomBytes(18).toString("base64");
-    return model.updateSession(sid, { user });
+    return model.createSession(sid, { user });
 }
 
 
 
-module.exports = { createUser, saveUserSession,COOKIE_OPTIONS };
+
+function verifyUser(email, password) {
+    return model.getUser(email).then((user) => {
+      return bcrypt.compare(password, user.password).then((match) => {
+        if (!match) {
+          throw new Error("Password mismatch");
+        } else {
+          delete user.password;
+          return user;
+        }
+      });
+    });
+  }
+
+  module.exports = { createUser, verifyUser,saveUserSession,COOKIE_OPTIONS };

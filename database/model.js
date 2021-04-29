@@ -1,4 +1,5 @@
 //this function is going to fetch user from database
+const { response } = require("express");
 const db = require("../database/connection");
 
 function getUser(email) {
@@ -18,7 +19,14 @@ function createUser(email, hash, name) {
     .then((result) => result.rows[0]);
 }
 
+function createSession(sid, data){
+const INSERT_SESSION = `INSERT INTO sessions (sid, data) VALUES ($1, $2)
+RETURNING sid`;
+return db.query(INSERT_SESSION, [sid, data])
+.then((result) => result.rows[0].sid)
+}
 module.exports = {
   createUser,
   getUser,
+  createSession
 };
