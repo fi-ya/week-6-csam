@@ -12,7 +12,7 @@ function get(request, response) {
     <label for='password'>Password <span aria-hidden="true">*</span></label>
     <input type="password" id='password' name='password' required />
     <button>Submit</button>
-  </form>
+  </form><br><br>
   <a href="/">Back to Homepage</a>
   `;
   response.send(layout("Sign up", html));
