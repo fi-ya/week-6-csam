@@ -6,9 +6,9 @@ function get(request, response) {
   <h1>Log in</h1>
     <form action="/log-in" method="POST">
       <label for="email">Email</label>
-      <input type="email" id="email" name="email">
+      <input type="email" id="email" name="email" required>
       <label for="password">Password</label>
-      <input type="password" id="password" name="password">
+      <input type="password" id="password" name="password" required>
       <button>Log in</button>
     </form>
     <a href="/">Back to Homepage</a>
