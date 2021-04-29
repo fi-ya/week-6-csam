@@ -2,12 +2,12 @@ const layout = require('../layout')
 
 function get(request, response) {
   const html = `
-  <h1>Welcome</h1>
+  <h1><img class='logo' src='logo.png'></h1>
     <a href="/sign-up">Sign up</a>
-    <span> | </span>
+    <br>
     <a href="/log-in">Log in</a>
   `;
-  response.send(layout('Welcome', html))
+  response.send(layout('Checkin', html))
 
 }
 

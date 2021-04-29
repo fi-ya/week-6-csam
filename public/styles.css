@@ -1,0 +1,48 @@
+body {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-family: 'Reem Kufi';
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 70%;
+  min-width: 30%;
+  margin: auto;
+  font-size: 1.2rem;
+}
+
+.logo {
+  height: 10%;
+  width: auto;
+}
+
+input {
+  height: 1.2rem;
+  margin-bottom: .5rem;
+}
+
+button {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  background-color: black;
+  color: white;
+  border-radius: 1rem;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  font-size: 1.3rem;
+  color: black;
+  border: 2px solid black;
+  border-radius: 1rem;
+  width: fit-content;
+  margin: auto;
+  padding: 1rem;
+}
