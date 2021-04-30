@@ -15,8 +15,8 @@ form {
 }
 
 .logo {
-  height: 10%;
-  width: auto;
+  height: auto;
+  max-width: 100%;
 }
 
 input {
@@ -26,7 +26,8 @@ input {
 
 button {
   font-size: 1.2rem;
-  margin-bottom: 1rem;
+  font-family: "Reem Kufi";
+  margin-top: .5rem;
   background-color: black;
   color: white;
   border-radius: 1rem;
@@ -45,4 +46,9 @@ a {
   width: fit-content;
   margin: auto;
   padding: 1rem;
+}
+
+a:hover {
+  background-color: pink;
+  transform: scale(1.1, 1.1);
 }
