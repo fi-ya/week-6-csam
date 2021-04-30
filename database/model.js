@@ -35,21 +35,26 @@ function createPost(user_id, text_content) {
     INSERT INTO posts ( user_id, text_content, created_at) VALUES
   ($1,  $2, (SELECT CURRENT_TIMESTAMP))
     `;
-  return db
-    .query(INSERT_POST, [user_id, text_content])
+  return db.query(INSERT_POST, [user_id, text_content]);
+}
+
+
+function getPostByID(postId){
+  const SELECT_POST = "SELECT * FROM posts WHERE id = $1 "
+  return db.query(SELECT_POST, [postId]);
 }
 
 function getUserSessionData(sid) {
-
-    const SELECT_SESSION_DATA = `
+  const SELECT_SESSION_DATA = `
         SELECT data FROM sessions WHERE sid = $1
     `;
-    return db
-      .query(SELECT_SESSION_DATA, [sid])
-      .then((result) => result.rows[0]);
+  return db.query(SELECT_SESSION_DATA, [sid]).then((result) => result.rows[0]);
 }
 
-
+function deletePost(postId) {
+  const DELETE_POST = "DELETE FROM posts WHERE id = $1 ";
+  return db.query(DELETE_POST, [postId]);
+}
 
 module.exports = {
   createUser,
@@ -57,4 +62,6 @@ module.exports = {
   createSession,
   createPost,
   getUserSessionData,
+  deletePost,
+  getPostByID
 };
