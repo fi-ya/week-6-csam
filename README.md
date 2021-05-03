@@ -11,6 +11,21 @@ Your project this week is to build a web app that authenticates users and stores
 We deployed our application on [Heroku](https://week6-authentication.herokuapp.com/)
 
 ---
+## Table of Contents
+
+- [Roles](#roles)
+- [User Story](#user-story)
+- [User Journey](#user-journey)
+- [Ideas](#ideas)
+- [Schema](#schema)
+- [Day 1](#day-1)
+- [Day 2](#day-2)
+- [Issues with Deploy to Heroku](#issues-with-deploy-to-heroku)
+- [Final main page](#final-main-page)
+- [How to install the project](#how-to-install-the-project)
+- [Things we learned](#things-we-learned)
+
+---
 
 **Roles**
 
